@@ -19,12 +19,14 @@ tar -zxvf $TESSERACT_OCR_TGZ -C $INSTALL_DIR
 echo 'Getting Tesseract-OCR training data'
 if [ $TESSERACT_OCR_LANGUAGES ]
 then
+   rm -rf $INSTALL_DIR_TRAINING_DATA
+   mkdir -p $INSTALL_DIR_TRAINING_DATA
    array=(${TESSERACT_OCR_LANGUAGES//,/ })
    for i in "${!array[@]}"
    do
      lang="${array[i]}"
      echo $lang 'training data'
-     curl -o $INSTALL_DIR_TRAINING_DATA/$lang.traineddata https://raw.github.com/tesseract-ocr/tessdata/master/$lang.traineddata
+     wget -P $INSTALL_DIR_TRAINING_DATA https://raw.github.com/tesseract-ocr/tessdata/3.04.00/eng.traineddata
    done
 fi
 
